@@ -1,0 +1,29 @@
+# Render Blueprint — 一键部署配置
+# 详见: https://docs.render.com/blueprint-spec
+services:
+  - type: web
+    name: cognimesh
+    env: node
+    region: singapore  # 新加坡节点，国内访问较快
+    plan: free
+    buildCommand: npm run install:all && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # === 以下变量需在 Render Dashboard 手动填写 ===
+      # 请勿将真实值填入此文件！
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: REFRESH_SECRET
+        sync: false
+      - key: DEEPSEEK_API_KEY
+        sync: false
+      - key: AI_BASE_URL
+        value: https://api.deepseek.com
+      - key: AI_MODEL
+        value: deepseek-v4-flash
+      - key: CLIENT_URL
+        sync: false
