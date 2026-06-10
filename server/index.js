@@ -29,6 +29,9 @@ for (const key of requiredEnv) {
 
 const app = express();
 
+// Trust Render's reverse proxy (required for rate limiting + correct client IP)
+app.set('trust proxy', 1);
+
 const isProduction = process.env.NODE_ENV === 'production';
 const clientOrigin = process.env.CLIENT_URL || 'http://localhost:5173';
 
