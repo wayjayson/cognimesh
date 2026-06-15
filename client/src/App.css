@@ -323,21 +323,97 @@ textarea {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(10, 12, 20, 0.97);
+  background: var(--bg-primary);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 100;
+  overflow: hidden;
 }
 
+/* ---- Emotion Calendar Grid Background ---- */
+.login-bg-grid {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  gap: 5px;
+  padding: 48px;
+  z-index: 0;
+  opacity: 0.07;
+  pointer-events: none;
+}
+
+.login-bg-cell {
+  border-radius: 5px;
+}
+
+.login-bg-cell.warm  { background: #f0b27a; }
+.login-bg-cell.pink  { background: #c06c84; }
+.login-bg-cell.blue  { background: #a5b4fc; }
+.login-bg-cell.green { background: #4ade80; }
+
+/* ---- Warm Glow Overlay ---- */
+.login-bg-glow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 50%, rgba(240, 178, 122, 0.12) 0%, transparent 70%);
+  animation: loginGlowBreath 6s ease-in-out infinite;
+}
+
+@keyframes loginGlowBreath {
+  0%, 100% { opacity: 0.4; }
+  50%      { opacity: 1; }
+}
+
+/* ---- Floating Particles ---- */
+.login-bg-particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  background: #f0b27a;
+  z-index: 0;
+}
+
+.login-bg-particle:nth-child(1) { top: 12%; left: 15%; width: 4px; height: 4px; opacity: 0; animation: loginParticleDrift 5s ease-in-out infinite; }
+.login-bg-particle:nth-child(2) { top: 65%; left: 72%; width: 3px; height: 3px; opacity: 0; animation: loginParticleDrift 6s ease-in-out infinite 1.5s; }
+.login-bg-particle:nth-child(3) { top: 22%; left: 78%; width: 3px; height: 3px; opacity: 0; animation: loginParticleDrift 7s ease-in-out infinite 3s; }
+.login-bg-particle:nth-child(4) { top: 75%; left: 20%; width: 2px; height: 2px; opacity: 0; animation: loginParticleDrift 5.5s ease-in-out infinite 2s; }
+.login-bg-particle:nth-child(5) { top: 42%; left: 52%; width: 3px; height: 3px; opacity: 0; animation: loginParticleDrift 6.5s ease-in-out infinite 4s; }
+
+@keyframes loginParticleDrift {
+  0%   { opacity: 0; transform: translate(0, 0); }
+  15%  { opacity: 0.5; }
+  45%  { opacity: 0.7; transform: translate(30px, -35px); }
+  75%  { opacity: 0.25; transform: translate(40px, -45px); }
+  100% { opacity: 0; transform: translate(50px, -55px); }
+}
+
+/* ---- Login Card ---- */
 .login-card {
+  position: relative;
+  z-index: 10;
   background: var(--bg-card);
   border-radius: 24px;
   padding: 40px 32px;
   width: 380px;
-  border: 1px solid var(--border-light);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(240, 178, 122, 0.12);
+  box-shadow: 0 8px 48px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(240, 178, 122, 0.04) inset;
   text-align: center;
+  animation: loginCardEnter 0.8s ease-out, loginCardBreathe 5s ease-in-out 0.8s infinite;
+}
+
+@keyframes loginCardEnter {
+  from { opacity: 0; transform: translateY(24px) scale(0.95); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes loginCardBreathe {
+  0%, 100% { box-shadow: 0 8px 48px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(240, 178, 122, 0.04) inset; }
+  50%      { box-shadow: 0 8px 56px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(240, 178, 122, 0.14) inset; }
 }
 
 .login-title {

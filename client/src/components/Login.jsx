@@ -1,12 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { login, register } from '../api';
 import toast from 'react-hot-toast';
+
+const CELL_COLORS = ['warm', 'pink', 'blue', 'green'];
+
+function generateGrid(rows, cols, density = 0.5) {
+  const cells = [];
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const filled = Math.random() < density;
+      const color = filled ? CELL_COLORS[Math.floor(Math.random() * 4)] : null;
+      cells.push(color);
+    }
+  }
+  return cells;
+}
 
 export default function Login({ onLogin }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isRegister, setIsRegister] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  // Stable calendar grid pattern (generated once, not on re-render)
+  const gridCells = useMemo(() => generateGrid(6, 7, 0.5), []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -44,6 +61,23 @@ export default function Login({ onLogin }) {
 
   return (
     <div className="login-overlay">
+      {/* Emotion calendar grid background */}
+      <div className="login-bg-grid">
+        {gridCells.map((color, i) =>
+          color ? <div key={i} className={`login-bg-cell ${color}`} /> : <div key={i} className="login-bg-cell" />
+        )}
+      </div>
+
+      {/* Warm glow overlay */}
+      <div className="login-bg-glow" />
+
+      {/* Floating particles */}
+      <div className="login-bg-particle" />
+      <div className="login-bg-particle" />
+      <div className="login-bg-particle" />
+      <div className="login-bg-particle" />
+      <div className="login-bg-particle" />
+
       <div className="login-card">
         <h1 className="login-title">🧠 CogniMesh</h1>
         <p className="login-subtitle">认知镜像 · 情绪日历</p>
